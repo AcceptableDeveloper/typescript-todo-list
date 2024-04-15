@@ -56,9 +56,13 @@ function createDeleteButton(): HTMLButtonElement {
 
 function deleteTodo(event: Event): void {
   const target = event.target as HTMLButtonElement;
-  const listItem = target.parentElement as HTMLLIElement;
-  listItem.nextElementSibling?.remove();
-  listItem.remove();
+  const listItem = target.closest("li") as HTMLLIElement;
+  if (listItem) {
+    listItem.nextElementSibling?.remove();
+    listItem.remove();
+  } else {
+    console.error("List item not found");
+  }
 }
 
 function createCompleteButton(): HTMLButtonElement {

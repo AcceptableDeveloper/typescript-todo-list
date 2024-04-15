@@ -37,9 +37,14 @@ function createDeleteButton() {
 function deleteTodo(event) {
     var _a;
     var target = event.target;
-    var listItem = target.parentElement;
-    (_a = listItem.nextElementSibling) === null || _a === void 0 ? void 0 : _a.remove();
-    listItem.remove();
+    var listItem = target.closest("li");
+    if (listItem) {
+        (_a = listItem.nextElementSibling) === null || _a === void 0 ? void 0 : _a.remove();
+        listItem.remove();
+    }
+    else {
+        console.error("List item not found");
+    }
 }
 function createCompleteButton() {
     var completeButton = document.createElement("button");
