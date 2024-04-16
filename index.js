@@ -53,8 +53,16 @@ function createCompleteButton() {
     completeButton.addEventListener("click", completeTodo);
     return completeButton;
 }
-function completeTodo() {
-    // Add your code here
+function completeTodo(event) {
+    var target = event.target;
+    var listItem = target.closest("li");
+    target.disabled = true;
+    if (listItem) {
+        listItem.style.textDecoration = "line-through";
+    }
+    else {
+        console.error("List item not found");
+    }
 }
 function addButtonsToTodoItem() {
     var buttonGroup = document.createElement("div");

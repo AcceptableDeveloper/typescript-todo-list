@@ -63,6 +63,11 @@ section {
   cursor: pointer;
 }
 
+.complete-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 li {
   display: flex;
   justify-content: space-between;

@@ -74,8 +74,15 @@ function createCompleteButton(): HTMLButtonElement {
   return completeButton;
 }
 
-function completeTodo(): void {
-  // Add your code here
+function completeTodo(event: Event): void {
+  const target = event.target as HTMLButtonElement;
+  const listItem = target.closest("li") as HTMLLIElement;
+  target.disabled = true;
+  if (listItem) {
+    listItem.style.textDecoration = "line-through";
+  } else {
+    console.error("List item not found");
+  }
 }
 
 function addButtonsToTodoItem(): HTMLDivElement {
