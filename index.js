@@ -1,3 +1,5 @@
+var percentageCompleted = 0;
+var numberOfTodos = 0;
 document.addEventListener("DOMContentLoaded", function () {
     var submitButton = document.getElementById("todo-add-button");
     var inputField = document.getElementById("todo-input");
@@ -23,6 +25,8 @@ function addTodoItem(todoList, inputField, todoItem) {
     listItem.appendChild(addButtonsToTodoItem());
     todoList.appendChild(document.createElement("hr"));
     inputField.value = "";
+    numberOfTodos++;
+    calculatePercentageIncomplete();
 }
 function checkInputValidity(input) {
     return input.length > 0;
@@ -41,6 +45,8 @@ function deleteTodo(event) {
     if (listItem) {
         (_a = listItem.nextElementSibling) === null || _a === void 0 ? void 0 : _a.remove();
         listItem.remove();
+        numberOfTodos--;
+        calculatePercentageIncomplete();
     }
     else {
         console.error("List item not found");
@@ -57,6 +63,8 @@ function completeTodo(event) {
     var target = event.target;
     var listItem = target.closest("li");
     target.disabled = true;
+    numberOfTodos--;
+    calculatePercentageIncomplete();
     if (listItem) {
         listItem.style.textDecoration = "line-through";
     }
@@ -70,4 +78,7 @@ function addButtonsToTodoItem() {
     buttonGroup.appendChild(createCompleteButton());
     buttonGroup.appendChild(createDeleteButton());
     return buttonGroup;
+}
+function calculatePercentageIncomplete() {
+    document.getElementById("todo-incomplete-percentage").innerText = "".concat(percentageCompleted, "%");
 }

@@ -3,6 +3,9 @@ interface TodoItem {
   completed: boolean;
 }
 
+let percentageCompleted = 0;
+let numberOfTodos = 0;
+
 document.addEventListener("DOMContentLoaded", () => {
   const submitButton = document.getElementById(
     "todo-add-button"
@@ -39,6 +42,8 @@ function addTodoItem(
   listItem.appendChild(addButtonsToTodoItem());
   todoList.appendChild(document.createElement("hr"));
   inputField.value = "";
+  numberOfTodos++;
+  calculatePercentageIncomplete();
 }
 
 function checkInputValidity(input: string): boolean {
@@ -60,6 +65,8 @@ function deleteTodo(event: Event): void {
   if (listItem) {
     listItem.nextElementSibling?.remove();
     listItem.remove();
+    numberOfTodos--;
+    calculatePercentageIncomplete();
   } else {
     console.error("List item not found");
   }
@@ -78,6 +85,8 @@ function completeTodo(event: Event): void {
   const target = event.target as HTMLButtonElement;
   const listItem = target.closest("li") as HTMLLIElement;
   target.disabled = true;
+  numberOfTodos--;
+  calculatePercentageIncomplete();
   if (listItem) {
     listItem.style.textDecoration = "line-through";
   } else {
@@ -91,4 +100,10 @@ function addButtonsToTodoItem(): HTMLDivElement {
   buttonGroup.appendChild(createCompleteButton());
   buttonGroup.appendChild(createDeleteButton());
   return buttonGroup;
+}
+
+function calculatePercentageIncomplete() {
+  document.getElementById(
+    "todo-incomplete-percentage"
+  )!.innerText = `${percentageCompleted}%`;
 }
